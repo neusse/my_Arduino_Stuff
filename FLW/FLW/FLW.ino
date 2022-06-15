@@ -98,7 +98,7 @@ char displayBuf[4] = {' ',' ',' ',' '};
 // Check if it's the top of the hour and get a new time reading
   // from the DS1307.  This helps keep the clock accurate by fixing
   // any drift.
-  if (minutes == 0) {
+  //if (minutes == 0) {
     // Get the time from the DS1307.
     DateTime now = rtc.now();
     // Print out the time for debug purposes:
@@ -118,7 +118,7 @@ char displayBuf[4] = {' ',' ',' ',' '};
     // Now set the hours and minutes.
     hours = now.hour();
     minutes = now.minute();
-  }
+  //}
 // Show the time on the display by turning it into a numeric
   // value, like 3:30 turns into 330, by multiplying the hour by
   // 100 and then adding the minutes.
