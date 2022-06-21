@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/neusse/Documents/GitHub/my_Arduino_Stuff'
+make: Leaving directory '/home/neusse/Documents/GitHub/my_Arduino_Stuff'
+ 
+make: *** No targets specified and no makefile found.  Stop.
+
