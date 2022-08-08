@@ -33,7 +33,44 @@ SdFile root;
 // Adafruit SD shields and modules: pin 10
 // Sparkfun SD shield: pin 8
 // MKRZero SD: SDCARD_SS_PIN
+
 const int chipSelect = 10;
+const int myMISO = 50;
+const int myMOSI = 51;
+const int mySCK = 52;
+const int mySS = 53;  // slave select  SS
+
+//SPI: Pins 50(MISO), 51(MOSI), 52(SCK), and 53(SS).
+// To communicate with the periphery through the SPI interface. 
+// use the SPI library.
+// TWI/I²C: Pins 20(SDA) and 21(SCL)
+// UART: pins 0(RX) and 1(TX), 19(RX1) and 18(TX1), 17(RX2) and 16(TX2), 15(RX3) and 14(TX3).
+// PWM: Pins 2-13 and 44-46
+// ADC: Pins A0-A16
+// Digital I/O: Pins 0-53
+
+
+// An SS pin does not need programming as such apart from making it an 
+// output and setting it high. When you want to talk to a particular SPI device
+// you set it's SS pin low, do the SPI transfers and then set the SS pin high
+// again when you finished talking to the SPI device.
+
+//#SPI: Pins 50(MISO), 51(MOSI), 52(SCK), and 53(SS).
+
+//pinMode(chipSelect,  OUTPUT);
+
+//pinMode(myMISO,      INPUT_PULLUP);
+//pinMode(myMOSI,      OUTPUT); //pullup the MOSI pin on the SD card
+//pinMode(mySCK,       OUTPUT);
+//pinMode(MySS,        OUTPUT);
+ 
+//digitalWrite(chipSelect, HIGH);
+//digitalWrite(mySS,       HIGH);
+//digitalWrite(myMOSI,     HIGH); //pullup the MOSI pin on the SD card
+
+//digitalWrite(mySCK,      LOW); //pull 
+
+
 
 void setup() {
   // Open serial communications and wait for port to open:
@@ -42,8 +79,38 @@ void setup() {
     ; // wait for serial port to connect. Needed for native USB port only
   }
 
-//pinMode(10,OUTPUT);
-  Serial.print("\nInitializing SD card...");
+
+  pinMode(chipSelect,  OUTPUT);
+//pinMode(myMISO,      INPUT_PULLUP);
+//pinMode(myMOSI,      OUTPUT); //pullup the MOSI pin on the SD card
+//pinMode(mySCK,       OUTPUT);
+//pinMode(MySS,        OUTPUT);
+
+
+ 
+digitalWrite(chipSelect, LOW);
+//digitalWrite(mySS,       HIGH);
+//digitalWrite(myMOSI,     HIGH); //pullup the MOSI pin on the SD card
+
+//digitalWrite(mySCK,      LOW); //pull 
+
+
+  if( !SD.begin(chipSelect)) {
+    Serial.println("Card Faild!=======");
+    //return;  
+  }
+
+  Serial.println("My Card talked!!!!!");
+  
+
+//  pinMode(chipSelect,OUTPUT);
+//  digitalWrite(chipSelect, HIGH);
+//pinMode(11, OUTPUT);
+//digitalWrite(11, HIGH); //pullup the MOSI pin on the SD card
+//pinMode(12,INPUT_PULLUP);//pullup the MISO pin on the SD card
+//pinMode(13, OUTPUT);
+//digitalWrite(13, LOW); //pull 
+//  Serial.print("\nInitializing SD card...");
 
   // we'll use the initialization code from the utility libraries
   // since we're just testing if the card is working!
