@@ -352,22 +352,24 @@ int setuprun = 0;
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
-  while (!Serial) ; // wait for serial
-  delay(200);
-  Serial.println("FLW Test");
-  Serial.println("-------------------");
+  //Serial.begin(9600);
+//  while (!Serial) ; // wait for serial
+//  delay(200);
+  //Serial.println("FLW Test");
+  //Serial.println("-------------------");
    randomSeed(analogRead(0));
    
-  setuprun +=1;
-  if( setuprun >1 ) {
-    Serial.println(" Setup ran to many times!");
-    while(1) {
-      
-    }
-  }
-
+//  setuprun +=1;
+//  if( setuprun >1 ) {
+//    Serial.println(" Setup ran to many times!");
+//    while(1) {
+//      
+//    }
+//  }
+ // alpha4.setBrightness(2);
   alpha4.begin(0x70);  // pass in the address
+
+  alpha4.setBrightness(2);
 
   alpha4.writeDigitRaw(3, 0x0);
   alpha4.writeDigitRaw(0, 0xFFFF);
@@ -403,44 +405,48 @@ void setup() {
      Make sure your receiving string in RAM is large enough to hold whatever
      you are retrieving from program space. */
 
-void list_all_flw() {
-  //while(1) {
-    for (int i = 1; i <= 299; i++) {
-      strcpy_P(buffer, (char *)pgm_read_word(&(string_table[i])));  // Necessary casts and dereferencing, just copy.
-      for( int x=2; x<strlen(buffer); x=x+2 ) {
-        Serial.print(buffer[0]);
-        Serial.print(buffer[1]);
-        Serial.print(buffer[x]);
-        Serial.println(buffer[x+1]);
-        delay(500);
-      }
-    }
-  //}
-}
+//void list_all_flw() {
+//  //while(1) {
+//    for (int i = 1; i <= 299; i++) {
+//      strcpy_P(buffer, (char *)pgm_read_word(&(string_table[i])));  // Necessary casts and dereferencing, just copy.
+//      for( int x=2; x<strlen(buffer); x=x+2 ) {
+//        Serial.print(i);
+//        Serial.print(", ");
+//        Serial.print(x);
+//        Serial.print(" ");
+//        Serial.print(buffer[0]);
+//        Serial.print(buffer[1]);
+//        Serial.print(buffer[x]);
+//        Serial.println(buffer[x+1]);
+//        delay(500);
+//      }
+//    }
+//  //}
+//}
 
-void list_rnd_flw(){
-  int x;
-  int i;
-  //while(1) {
-    i = random(1,300);
-    strcpy_P(buffer, (char *)pgm_read_word(&(string_table[i])));  // Necessary casts and dereferencing, just copy.
-       
-    x = random( 2,((strlen(buffer)-2)/2)+1);
-    Serial.print(buffer[0]);
-    Serial.print(buffer[1]);
-    Serial.print(buffer[x]);
-    Serial.println(buffer[x+1]);
-    //Serial.print(" - i=");
-    //Serial.print(i);
-    //Serial.print(" - strlen=");
-    //Serial.print(strlen(buffer));
-    //Serial.print(" - x=");
-    //Serial.println(x);
-    
-    delay(500);
-      
-  //}
-}
+//void list_rnd_flw(){
+//  int x;
+//  int i;
+//  //while(1) {
+//    i = random(1,300);
+//    strcpy_P(buffer, (char *)pgm_read_word(&(string_table[i])));  // Necessary casts and dereferencing, just copy.
+//       
+//    x = random( 2,((strlen(buffer)-2)/2)+1);
+//    Serial.print(buffer[0]);
+//    Serial.print(buffer[1]);
+//    Serial.print(buffer[x]);
+//    Serial.println(buffer[x+1]);
+//    //Serial.print(" - i=");
+//    //Serial.print(i);
+//    //Serial.print(" - strlen=");
+//    //Serial.print(strlen(buffer));
+//    //Serial.print(" - x=");
+//    //Serial.println(x);
+//    
+//    delay(500);
+//      
+//  //}
+//}
 
 void list_rnd_sol_flw(){
   int x;
@@ -449,8 +455,15 @@ void list_rnd_sol_flw(){
   char obuff[5];
   i = random(1,300);
   strcpy_P(buffer, (char *)pgm_read_word(&(string_table[i])));  // Necessary casts and dereferencing, just copy.
-   
-  x = random( 2,((strlen(buffer)-2)/2)+1);
+  
+  int len = ((strlen(buffer)-2)/2)+1 ;
+  x = random( 2,len);
+  
+  //Serial.println("i -- x -- len");
+  //Serial.println(i);
+  //Serial.println(x);
+  //Serial.println(len);
+  //Serial.println();
 
   for( i=0; i<4; i++ ) {
     obuff[i] = ' ';
@@ -473,7 +486,7 @@ void list_rnd_sol_flw(){
     } else 
       continue;  
     
-    Serial.println(obuff);
+//    Serial.println(obuff);
     //Serial.print('\r');
     //delay(500);
 
@@ -489,29 +502,29 @@ void list_rnd_sol_flw(){
     
     if( count == 4 ) break;
   }
-  Serial.println("");
-  delay(1500);
+//  Serial.println("");
+  delay(2500);
 }
 
-void myWrite( char buff, int myDelay ){
- char obuff[5];
-  
- // set every digit to the buffer
-  alpha4.writeDigitAscii(0, obuff[0]);
-  alpha4.writeDigitAscii(1, obuff[1]);
-  alpha4.writeDigitAscii(2, obuff[2]);
-  alpha4.writeDigitAscii(3, obuff[3]);
- 
-  // write it out!
-  alpha4.writeDisplay();
-}
+//void myWrite( char buff, int myDelay ){
+// char obuff[5];
+//  
+// // set every digit to the buffer
+//  alpha4.writeDigitAscii(0, obuff[0]);
+//  alpha4.writeDigitAscii(1, obuff[1]);
+//  alpha4.writeDigitAscii(2, obuff[2]);
+//  alpha4.writeDigitAscii(3, obuff[3]);
+// 
+//  // write it out!
+//  alpha4.writeDisplay();
+//}
 
 void loop() {
   // put your main code here, to run repeatedly:
 
   while(1) {
     //list_rnd_flw();
-    //list_all_flw():
+    //list_all_flw();
     list_rnd_sol_flw();
   }
 
